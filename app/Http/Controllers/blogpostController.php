@@ -36,7 +36,15 @@ class blogpostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newBlogPost =blogpost::create([ 
+            'title' => $request -> title, 
+            'author' => $request -> author, 
+            'content'=>$request -> content
+        ]);
+        //This is for returning any message i.e success,failure
+        // return \Response::json(['message'=>'success']);
+        //this is for returning the content to be saved
+        return response()->json($newBlogPost);
     }
 
     /**
@@ -58,16 +66,27 @@ class blogpostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+        $blogpost=blogpost::find($id);
+        $blogpost->title=$request->title;
+        $blogpost->author=$request->author;
+        $blogpost->content=$request->content;
+        // $blogpost=$request->all();
+        $blogpost->save();
+        return response()->json($blogpost);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $blogpost=blogpost::find($id);
+        $blogpost->delete();
+        // return response()->json($blogpost);
+        return \Response::json(['message'=>'blogpost deleted successfully']);
+        
     }
 }
