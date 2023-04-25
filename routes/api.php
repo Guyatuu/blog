@@ -22,4 +22,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::resource ('blogpost',blogpostController::class);
 Route::resource ('blogcategories',blogcategoriesController::class);
-

@@ -29,7 +29,9 @@ class blogcategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newcategories =blogcategories::create(['name' => $request->name]);
+        return response()->json($newcategories);
+
     }
 
     /**
@@ -51,9 +53,12 @@ class blogcategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+        $blogcategories=blogcategories::find($id);
+        $blogcategories->name=$request->name;
+        $blogcategories=$request->all();
+        return response()->json($blogcategories);
     }
 
     /**
@@ -61,6 +66,9 @@ class blogcategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $blogcategories=blogcategories::findorFail($id);
+        $blogcategories->delete();
+        // return response()->json($blogcategories);
+        return \Response::json(['message'=>'name deleted successfully']);
     }
 }
